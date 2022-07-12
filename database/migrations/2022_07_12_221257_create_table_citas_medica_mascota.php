@@ -15,6 +15,13 @@ return new class extends Migration
     {
         Schema::create('citas_medica_mascota', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('mascota_id')
+                ->references('id')
+                ->on('mascotas')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->date("fecha_agendamiento");
             $table->timestamps();
         });
     }
