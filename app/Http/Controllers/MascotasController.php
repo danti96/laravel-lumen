@@ -40,6 +40,14 @@ class MascotasController extends Controller
                 "raza.required" => "Raza es requerido",
             ]);
 
+            $key_allow = $this->keysAllow($request->all(), ['nombre', 'raza', 'remember_token']);
+            if (count($key_allow) > 0) {
+                return response()->json([
+                    "Message" => "Keys not allowed",
+                    "keys" => $key_allow
+                ], 400, []);
+            }
+
             $data = $request->json()->all();
 
             try {
@@ -81,6 +89,14 @@ class MascotasController extends Controller
                 "raza.required" => "Raza es requerido",
                 "id.required" => "Id es requerido",
             ]);
+
+            $key_allow = $this->keysAllow($request->all(), ['nombre', 'raza', 'remember_token', 'id']);
+            if (count($key_allow) > 0) {
+                return response()->json([
+                    "Message" => "Keys not allowed",
+                    "keys" => $key_allow
+                ], 400, []);
+            }
 
             $data = $request->json()->all();
 
@@ -133,6 +149,14 @@ class MascotasController extends Controller
                 "fecha_agendamiento.required" => "Fecha de agendamiento es requerido",
             ]);
 
+            $key_allow = $this->keysAllow($request->all(), ['mascota_id', 'fecha_agendamiento', 'remember_token']);
+            if (count($key_allow) > 0) {
+                return response()->json([
+                    "Message" => "Keys not allowed",
+                    "keys" => $key_allow
+                ], 400, []);
+            }
+
             $data = $request->json()->all();
 
             try {
@@ -175,6 +199,13 @@ class MascotasController extends Controller
                 "id.required" => "Id es requerido",
             ]);
 
+            $key_allow = $this->keysAllow($request->all(), ['mascota_id', 'fecha_agendamiento', 'remember_token', 'id']);
+            if (count($key_allow) > 0) {
+                return response()->json([
+                    "Message" => "Keys not allowed",
+                    "keys" => $key_allow
+                ], 400, []);
+            }
             $data = $request->json()->all();
 
             try {
@@ -204,5 +235,13 @@ class MascotasController extends Controller
             DB::rollBack();
             return response()->json(["error" => $th->getMessage()], 400, []);
         }
+    }
+    private function keysAllow($data, $keys)
+    {
+        for ($i = 0; $i < count($keys); $i++) {
+            $item = $keys[$i];
+            unset($data[$item]);
+        }
+        return $data;
     }
 }
