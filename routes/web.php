@@ -26,7 +26,18 @@ $router->get('/key', function () {
 $router->post('/register', ['uses' => 'UsersController@register']);
 $router->post('/login', ['uses' => 'UsersController@login']);
 
+
 $router->group(['middleware' => 'auth'], function () use ($router) {
-    //$user = Auth::user();
-    //$user = $request->user();
+    $router->get('/mascotas', ['uses' => 'MascotasController@index']);
+    $router->post('/mascotas/create', ['uses' => 'MascotasController@register']);
+    $router->get('/mascotas/{id}', ['uses' => 'MascotasController@search']);
+    $router->put('/mascotas/{id}', ['uses' => 'MascotasController@update']);
+    $router->delete('/mascotas/{id}', ['uses' => 'MascotasController@delete']);
+
+
+    $router->get('/mascotas-cita', ['uses' => 'MascotasController@mascotascitas']);
+    $router->post('/mascotas-cita/create', ['uses' => 'MascotasController@mascotasregister']);
+    $router->get('/mascotas-cita/{id}', ['uses' => 'MascotasController@mascotassearch']);
+    $router->put('/mascotas-cita/{id}', ['uses' => 'MascotasController@mascotasupdate']);
+    $router->delete('/mascotas-cita/{id}', ['uses' => 'MascotasController@mascotasdelete']);
 });

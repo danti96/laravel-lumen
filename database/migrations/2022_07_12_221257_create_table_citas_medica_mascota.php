@@ -21,7 +21,7 @@ return new class extends Migration
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->date("fecha_agendamiento");
+            $table->dateTime("fecha_agendamiento");
             $table->timestamps();
         });
     }
