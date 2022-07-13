@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 /** @var \Laravel\Lumen\Routing\Router $router */
 
 /*
@@ -18,4 +21,12 @@ $router->get('/', function () use ($router) {
 });
 $router->get('/key', function () {
     return \Illuminate\Support\Str::random(32);
+});
+
+$router->post('/register', ['uses' => 'UsersController@register']);
+$router->post('/login', ['uses' => 'UsersController@login']);
+
+$router->group(['middleware' => 'auth'], function () use ($router) {
+    //$user = Auth::user();
+    //$user = $request->user();
 });
